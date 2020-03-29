@@ -1,12 +1,13 @@
 import 'dart:async';
+import 'package:rxdart/rxdart.dart';
 
 class CounterBloc {
   // input
-  final _actionController = StreamController<bool>();
+  final _actionController = BehaviorSubject<bool>();
   Sink<void> get changeCountAction => _actionController.sink;
 
   //output
-  final _countController = StreamController<int>();
+  final _countController = BehaviorSubject<int>();
   Stream<int> get count => _countController.stream;
 
   int _count = 0;
