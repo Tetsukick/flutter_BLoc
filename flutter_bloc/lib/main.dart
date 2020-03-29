@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         home: Provider<CounterBloc>(
           create: (context) => CounterBloc(),
           dispose: (context, bloc) => bloc.dispose(),
-          child: MyHomePage(title: 'Flutter Demo Home Page'),
+          child: MyHomePage(title: 'Flutter BLoC Counter'),
         ));
   }
 }
