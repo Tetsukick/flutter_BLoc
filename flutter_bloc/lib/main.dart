@@ -52,13 +52,31 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          counterBloc.increment.add(null);
-        },
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: Column(
+        verticalDirection: VerticalDirection.up, // childrenの先頭を下に配置
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: () {
+              counterBloc.changeCountAction.add(false);
+            },
+            tooltip: 'Declement',
+            child: Icon(Icons.remove),
+          ),
+          Container( // 余白のためContainerでラップ
+            margin: EdgeInsets.only(bottom: 16.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                counterBloc.changeCountAction.add(true);
+              },
+              tooltip: 'Increment',
+              backgroundColor: Colors.redAccent,
+              child: Icon(Icons.add),
+            ),
+          ),
+        ],
+      ),
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
