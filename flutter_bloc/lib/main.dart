@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
               dispose: (context, bloc) => bloc.dispose(),
             ),
           ],
-          child: MyHomePage(title: 'Flutter BLoC Counter'),
+          child: MyHomePage(title: 'Flutter BLoC Sample'),
         )
     );
   }

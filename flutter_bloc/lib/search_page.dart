@@ -41,37 +41,26 @@ class SearchPage extends StatelessWidget {
                       // snapshot は AsyncSnapshot<T> で
                     }
                     if (snapshot.data != null) {
-                      return Container(height: 200, child: SingleChildScrollView(child: Text(snapshot.data.toString()),),);
-                      return ListView(
-                        children: ListTile.divideTiles(
-                            context: context,
-                            tiles: snapshot.data.map((result) {
-                              print(result);
-                              return ListTile(
-                                title: Text(result['full_name']),
-//                                subtitle: new Row(
-//                                  mainAxisSize: MainAxisSize.max,
-//                                  children: <Widget>[
-//                                    Flexible(
-//                                        child: Text(
-//                                            'Major: ${beacon.major}\nMinor: ${beacon.minor}',
-//                                            style: TextStyle(fontSize: 13.0)),
-//                                        flex: 1,
-//                                        fit: FlexFit.tight),
-//                                    Flexible(
-//                                        child: Text(
-//                                            'Accuracy: ${beacon.accuracy}m\nRSSI: ${beacon.rssi}',
-//                                            style: TextStyle(fontSize: 13.0)),
-//                                        flex: 2,
-//                                        fit: FlexFit.tight)
-//                                  ],
-//                                ),
-                              );
-                            })).toList(),
+                      return Expanded(
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, int index) {
+                              var item = snapshot.data[index];
+                              return Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(color: Colors.black38),
+                                    ),
+                                  ),
+                                  child: ListTile(
+                                    title: Text(item['full_name']),
+                                    subtitle: Text('Star: ' + item['stargazers_count'].toString()),
+                                    onTap: () { /* react to the tile being tapped */ },
+                                  ));
+                            }),
                       );
-                    // snapshot.data を使ったWidgetを返す
-                    } else {
-                    // 何かWidgetを返す
                     }
                     return Container();
                   })
