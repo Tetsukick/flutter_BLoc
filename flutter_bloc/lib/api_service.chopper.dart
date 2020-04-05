@@ -17,18 +17,9 @@ class _$ApiService extends ApiService {
   final definitionType = ApiService;
 
   @override
-  Future<Response<dynamic>> fetchApi(
-      {String query = 'Flutter',
-      int page = 1,
-      String sort = 'created',
-      int perPage = 10}) {
-    final $url = '/v2/items';
-    final $params = <String, dynamic>{
-      'query': query,
-      'page': page,
-      'sort': sort,
-      'per_page': perPage
-    };
+  Future<Response<dynamic>> fetchApi({String query, String sort = 'stars'}) {
+    final $url = '/repositories';
+    final $params = <String, dynamic>{'q': query, 'sort': sort};
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<dynamic, dynamic>($request);
   }

@@ -1,7 +1,7 @@
 import 'package:chopper/chopper.dart';
 
 class ChopperClientCreator {
-  static final String baseUrl = "https://qiita.com/api";
+  static final String baseUrl = "https://api.github.com/search";
 
   static ChopperClient create() {
     return ChopperClient(

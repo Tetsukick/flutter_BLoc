@@ -33,18 +33,22 @@ class SearchPage extends StatelessWidget {
               StreamBuilder(
                   stream: searchBloc.result,
                   builder: (context, snapshot) {
+                    print(snapshot);
+                    print(snapshot.hasError);
                     if (snapshot.hasError) {
                       print(snapshot.error);
                       // snapshot.error を使ったWidgetを返す
                       // snapshot は AsyncSnapshot<T> で
                     }
                     if (snapshot.data != null) {
+                      return Container(height: 200, child: SingleChildScrollView(child: Text(snapshot.data.toString()),),);
                       return ListView(
                         children: ListTile.divideTiles(
                             context: context,
                             tiles: snapshot.data.map((result) {
+                              print(result);
                               return ListTile(
-                                title: Text(result.toString()),
+                                title: Text(result['full_name']),
 //                                subtitle: new Row(
 //                                  mainAxisSize: MainAxisSize.max,
 //                                  children: <Widget>[
