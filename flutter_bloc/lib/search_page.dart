@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'search_bloc.dart';
+import 'package:flutter_inappbrowser/flutter_inappbrowser.dart';
 
 class SearchPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -33,8 +34,6 @@ class SearchPage extends StatelessWidget {
               StreamBuilder(
                   stream: searchBloc.result,
                   builder: (context, snapshot) {
-                    print(snapshot);
-                    print(snapshot.hasError);
                     if (snapshot.hasError) {
                       print(snapshot.error);
                       // snapshot.error を使ったWidgetを返す
@@ -57,7 +56,9 @@ class SearchPage extends StatelessWidget {
                                   child: ListTile(
                                     title: Text(item['full_name']),
                                     subtitle: Text('Star: ' + item['stargazers_count'].toString()),
-                                    onTap: () { /* react to the tile being tapped */ },
+                                    onTap: () {
+                                      this.openBrowser(url: item['html_url']);
+                                    },
                                   ));
                             }),
                       );
@@ -65,5 +66,19 @@ class SearchPage extends StatelessWidget {
                     return Container();
                   })
             ])));
+  }
+
+  openBrowser({String url}) {
+    ChromeSafariBrowser browser = ChromeSafariBrowser();
+    browser.open(url: url, options: ChromeSafariBrowserClassOptions(
+      androidChromeCustomTabsOptions: AndroidChromeCustomTabsOptions(
+        addShareButton: true,
+        toolbarBackgroundColor: "#ff0000",
+        enableUrlBarHiding: true,
+      ),
+      iosSafariOptions: IosSafariOptions(
+        barCollapsingEnabled: true,
+      )
+    ));
   }
 }

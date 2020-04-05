@@ -26,6 +26,7 @@ dependencies:
   provider:
   rxdart:
   chopper:
+  flutter_inappbrowser:
 
 dev_dependencies:
   flutter_test:
