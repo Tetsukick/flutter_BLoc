@@ -1,5 +1,9 @@
 import 'dart:async';
+import 'package:flutterbloc/api_service.dart';
 import 'package:rxdart/rxdart.dart';
+import 'chopper_client_creater.dart';
+
+import 'package:chopper/chopper.dart';
 
 class SearchBloc {
   final searchApi = SearchApi();
@@ -9,18 +13,21 @@ class SearchBloc {
   StreamSink<String> get changeQuery => searchQueryController.sink;
 
   // APIの返り値となるSearchResult型を自作したと仮定
-  final searchResultController = BehaviorSubject<SearchResult>();
-  Stream<SearchResult> get result => searchResultController.stream;
-  StreamSink<SearchResult> get changeResult => searchResultController.sink;
+  final searchResultController = BehaviorSubject<List<SearchResult>>();
+  Stream<List<SearchResult>> get result => searchResultController.stream;
+  StreamSink<List<SearchResult>> get changeResult => searchResultController.sink;
 
   SearchBloc() {
     query.listen((v) async {
       // APIの返り値となるSearchResult型を自作したと仮定
-      final SearchResult searchResult = await searchApi.search(v);
-      if (searchResult.isError) {
-        changeResult.addError(searchResult);
+      final List<SearchResult> searchResults = await searchApi.fetchApi();
+      print("------");
+      print(searchResults);
+      print("------");
+      if (searchResults.isEmpty) {
+        changeResult.addError(searchResults);
       } else {
-        changeResult.add(searchResult);
+        changeResult.add(searchResults);
       }
     });
   }
@@ -32,13 +39,22 @@ class SearchBloc {
 }
 
 class SearchApi {
-  Future<SearchResult> search(String v) async {
-    await Future.delayed(Duration(seconds: 1));
-    return SearchResult(isError: false);
+  final ApiService service =
+  ApiService.create(ChopperClientCreator.create());
+
+  Future<List<SearchResult>> fetchApi() async {
+    final Response response = await service.fetchApi();
+    if (response.isSuccessful) {
+      print(response.body);
+//      final responseBodyJson = response.body as List<Map<String, dynamic>>;
+      // jsonのパース
+//      return response.body;
+    }
   }
 }
 
 class SearchResult {
-  bool isError;
-  SearchResult({this.isError});
+  String title;
+  int likes_count;
+  String created_at;
 }

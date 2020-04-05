@@ -25,10 +25,14 @@ dependencies:
   cupertino_icons: ^0.1.2
   provider:
   rxdart:
+  chopper:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  build_runner:
+  chopper_generator:
 
 
 # For information on the generic Dart part of this file, see the

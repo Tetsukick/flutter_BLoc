@@ -34,10 +34,37 @@ class SearchPage extends StatelessWidget {
                   stream: searchBloc.result,
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
+                      print(snapshot.error);
                       // snapshot.error を使ったWidgetを返す
                       // snapshot は AsyncSnapshot<T> で
                     }
                     if (snapshot.data != null) {
+                      return ListView(
+                        children: ListTile.divideTiles(
+                            context: context,
+                            tiles: snapshot.data.map((result) {
+                              return ListTile(
+                                title: Text(result.toString()),
+//                                subtitle: new Row(
+//                                  mainAxisSize: MainAxisSize.max,
+//                                  children: <Widget>[
+//                                    Flexible(
+//                                        child: Text(
+//                                            'Major: ${beacon.major}\nMinor: ${beacon.minor}',
+//                                            style: TextStyle(fontSize: 13.0)),
+//                                        flex: 1,
+//                                        fit: FlexFit.tight),
+//                                    Flexible(
+//                                        child: Text(
+//                                            'Accuracy: ${beacon.accuracy}m\nRSSI: ${beacon.rssi}',
+//                                            style: TextStyle(fontSize: 13.0)),
+//                                        flex: 2,
+//                                        fit: FlexFit.tight)
+//                                  ],
+//                                ),
+                              );
+                            })).toList(),
+                      );
                     // snapshot.data を使ったWidgetを返す
                     } else {
                     // 何かWidgetを返す
